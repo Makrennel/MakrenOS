@@ -27,6 +27,7 @@ modules:
       - bat
       - eza
       - fastfetch
+      - icewm
       - kitty
       - mpv
       - neovim

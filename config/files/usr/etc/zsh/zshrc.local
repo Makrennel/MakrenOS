@@ -1,0 +1,4 @@
+source /etc/makrenos/zsh/set-path
+source /etc/makrenos/zsh/aliases
+
+fastfetch

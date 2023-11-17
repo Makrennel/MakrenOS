@@ -1,0 +1,18 @@
+# Default Base Dirs
+export XDG_CACHE_HOME="$HOME/Local/cache"
+export XDG_CONFIG_HOME="$HOME/Local/etc"
+export XDG_DATA_HOME="$HOME/Local/share"
+export XDG_STATE_HOME="$HOME/Local/state"
+
+# This is automatically set by logind
+#export XDG_RUNTIME_DIR=
+
+# Default User Dirs
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_PICTURES_DIR="$HOME/Images"
+export XDG_PUBLICSHARE_DIR="$HOME/Shared"
+export XDG_TEMPLATES_DIR="$HOME/Templates"
+export XDG_VIDEOS_DIR="$HOME/Videos"

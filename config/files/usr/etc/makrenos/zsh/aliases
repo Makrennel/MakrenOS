@@ -1,0 +1,9 @@
+# Neovim
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
+
+# Conveniences
+alias cat="bat"
+alias lf="ranger"
+alias neofetch="fastfetch"

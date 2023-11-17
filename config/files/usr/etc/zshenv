@@ -1,0 +1,4 @@
+source /etc/makrenos/zsh/xdg-directories
+source /etc/makrenos/zsh/clean-up-mess
+source /etc/makrenos/zsh/default-programs
+source /etc/makrenos/zsh/set-path

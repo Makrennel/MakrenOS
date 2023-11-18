@@ -1,0 +1,11 @@
+[Unit]
+Description=Changes the shell of users to zsh on boot
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/makrenos-change-shells zsh
+ExecStop=/usr/bin/makrenos-change-shells bash
+
+[Install]
+WantedBy=multi-user.target

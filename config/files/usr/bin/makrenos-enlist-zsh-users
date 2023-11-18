@@ -1,0 +1,8 @@
+#!/bin/sh
+# This is intended to be run by a systemd service on boot to make all users use zsh by default unless explicitly set to false
+# Changing shell to zsh permanently can make it difficult to log into the system if you decide to rebase to a different image, so this is just to be safe
+# Unfortunately, user services don't appear to start early enough to force the first shell upon login to be zsh, so this hack has to be used
+# TODO: Handle new users
+echo '#user:zsh' >> /etc/makrenos/users
+/usr/bin/makrenos-list-users >> /etc/makrenos/users
+sed -i s/$/:true/ /etc/makrenos/users

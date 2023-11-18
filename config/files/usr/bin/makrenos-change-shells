@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [[ ! -f /etc/makrenos/users ]]; then
+	/usr/bin/makrenos-enlist-zsh-users
+fi
+
+while read p; do
+	arr=($(echo $p | tr ":" "\n"))
+	if [[ ${arr[1]} == "true" ]]; then
+		chsh -s /usr/bin/$1 ${arr[0]}
+		echo "set user ${arr[0]} to /usr/bin/$1"
+	fi
+done </etc/makrenos/users

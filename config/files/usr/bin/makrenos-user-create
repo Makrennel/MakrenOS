@@ -1,0 +1,31 @@
+#!/usr/bin/sh
+
+# Help
+if [ "$#" -eq 0 ] || [ $1 == "--help" ] || [ $1 = "-h" ]; then
+	echo "MakrenOS wrapper script around useradd for correctly creating users"
+	echo "Syntax: makrenos-user-create USERNAME [ARGUMENTS]"
+	echo "See 'useradd --help' for arguments"
+	echo "Arguments -m -d or -s are predefined, do not use them."
+	exit
+fi
+
+# Check if running as root
+if [ $EUID -ne 0 ]; then
+	echo "Please run as root."
+	exit
+fi
+
+username=$1
+
+# Add user
+useradd -m -d /var/home/${username}/Local -s /usr/bin/zsh ${@:2} ${username}
+
+# Change ownership of actual user home
+chown -R ${username} /var/home/${username}
+chgrp -R ${username} /var/home/${username}
+
+# Remove access to user home from users other than the new user
+chmod go-rx /var/home/${username}
+
+# Add user to zsh service
+echo "${username}:true" >> /etc/makrenos/users

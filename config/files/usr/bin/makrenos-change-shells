@@ -1,9 +1,12 @@
 #!/bin/sh
+# Changing shell to zsh permanently can cause issues if you rebase to another image which does not contain zsh, so this is just a hack to be safe
+# This can be opted out per user by setting the value to false in /etc/makrenos/users
+# Unfortunately user services don't start early enough to force the first shell on boot to the correct shell so this has to be done with a system service
 
-if [[ ! -f /etc/makrenos/users ]]; then
-	/usr/bin/makrenos-enlist-zsh-users
-fi
+# Conscript users who have not been added
+/usr/bin/makrenos-enlist-zsh-users
 
+# Set the user's shell
 while read p; do
 	arr=($(echo $p | tr ":" "\n"))
 	if [[ ${arr[1]} == "true" ]]; then
@@ -11,3 +14,4 @@ while read p; do
 		echo "set user ${arr[0]} to /usr/bin/$1"
 	fi
 done </etc/makrenos/users
+

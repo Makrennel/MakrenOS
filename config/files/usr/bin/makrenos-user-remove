@@ -1,0 +1,33 @@
+#!/bin/sh
+# Wrapper script to remove users correctly in makrenos
+
+# Help
+if [ "$#" -eq 0 ] || [ $1 == "--help" ] || [ $1 = "-h" ]; then
+	echo "MakrenOS wrapper script around userdel for correctly removing users"
+	echo "Syntax: makrenos-user-remove USERNAME [ARGUMENTS]"
+	echo "See 'userdel --help' for arguments"
+	exit
+fi
+
+# Check if running as root
+if [ $EUID -ne 0 ]; then
+	echo "Please run as root."
+	exit
+fi
+
+username=$1
+
+# Delete the user
+userdel ${@:2} ${username}
+
+# Remove user from zsh service
+awk -v s="${username}:" '! index($0, s) == 1' /etc/makrenos/users >> /etc/makrenos/users-tmp
+mv /etc/makrenos/users-tmp /etc/makrenos/users
+
+# userdel will only delete the Local directory automatically so we have to remove the actual user home
+for a in ${@:2}
+do
+	if [ $a == "-r" ] || [ $a == "--remove" ]; then
+		rm -rf /var/home/${username}
+	fi
+done

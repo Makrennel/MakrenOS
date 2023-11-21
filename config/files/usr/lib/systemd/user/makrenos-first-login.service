@@ -1,0 +1,10 @@
+[Unit]
+Description=Automatically tries to generate base on login
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/makrenos-first-login
+
+[Install]
+WantedBy=default.target
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -f "~/.not-yet-logged-in ]; then
+	makrenos-generate-shell
+fi
+
+rm ~/.not-yet-logged-in

@@ -25,7 +25,6 @@ if [ -f .local ]; then
 else
 	mkdir Local
 fi
-ln -s ./ Local/.local
 
 # XDG_CONFIG_HOME
 if [ -f .config ]; then
@@ -33,7 +32,6 @@ if [ -f .config ]; then
 else
 	mkdir Local/etc
 fi
-ln -s etc Local/.config
 
 # XDG_CACHE_HOME
 if [ -f .cache ]; then 
@@ -41,7 +39,6 @@ if [ -f .cache ]; then
 else
 	mkdir Local/cache
 fi
-ln -s cache Local/.cache
 
 # Flatpak - cannot move .var from $HOME but we can symlink so it's accessible unhidden
 if [ -f .var ]; then
@@ -49,7 +46,6 @@ if [ -f .var ]; then
 else
 	mkdir Local/.var
 fi
-ln -s .var Local/var
 
 # Themes
 if [ -f .themes ]; then
@@ -57,7 +53,6 @@ if [ -f .themes ]; then
 else
 	mkdir Local/share/themes
 fi
-ln -s share/themes Local/.themes
 flatpak override --filesystem=~/share/themes
 
 # Bin
@@ -66,7 +61,6 @@ if [ -f .bin ]; then
 else
 	mkdir Local/bin
 fi
-ln -s bin Local/.bin
 
 # Git Config
 mkdir Local/etc/git
@@ -97,8 +91,18 @@ else
 	echo "You may have to manually move some files or directories from your home directory to the new home in Local, or you will have problems with some programs"
 fi
 
+# Compatibility Symlinks
+pushd Local
+ln -s . .local
+ln -s etc .config
+ln -s cache .cache
+ln -s share/themes .themes
+ln -s bin .bin
+
 # MakrenOS FILES_HOME
-ln -s .. Local/files
+ln -s .. files
+ln -s .var var
+popd
 
 # Change user home
 usermod -d /var/home/${username}/Local ${username}

@@ -1,8 +1,6 @@
 source /etc/makrenos/zsh/set-path
 source /etc/makrenos/zsh/aliases
 
-if [ $PWD == $HOME ]; then
+if [ "$PWD" == "$HOME" ]; then
 	cd $FILES_HOME
 fi
-
-fastfetch

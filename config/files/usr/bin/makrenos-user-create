@@ -5,7 +5,7 @@ if [ "$#" -eq 0 ] || [ $1 == "--help" ] || [ $1 = "-h" ]; then
 	echo "MakrenOS wrapper script around useradd for correctly creating users"
 	echo "Syntax: makrenos-user-create USERNAME [ARGUMENTS]"
 	echo "See 'useradd --help' for arguments"
-	echo "Arguments -m -d or -s are predefined, do not use them."
+	echo "Arguments -k -m -d or -s are predefined, do not use them."
 	exit
 fi
 
@@ -18,7 +18,7 @@ fi
 username=$1
 
 # Add user
-useradd -m -d /var/home/${username}/Local -s /usr/bin/zsh ${@:2} ${username}
+useradd -k /etc/makrenos/skel -m -d /var/home/${username}/Local -s /usr/bin/zsh ${@:2} ${username}
 
 # Change ownership of actual user home
 chown -R ${username} /var/home/${username}

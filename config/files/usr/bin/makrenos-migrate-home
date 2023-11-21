@@ -51,19 +51,24 @@ fi
 if [ -f .themes ]; then
 	mv -v .themes Local/share/themes
 else
-	mkdir Local/share/themes
+	mkdir -p Local/share/themes
 fi
-flatpak override --filesystem=~/share/themes
+flatpak -v override --filesystem=~/share/themes
 
 # Bin
 if [ -f .bin ]; then
-	mv -v .bin Local/bin
+	if [ -f Local/bin ]; then
+		mv -v .bin/* Local/bin/
+		rm -r .bin
+	else
+		mv -v .bin Local/bin
+	fi
 else
 	mkdir Local/bin
 fi
 
 # Git Config
-mkdir Local/etc/git
+mkdir -p Local/etc/git
 if [ -f .gitconfig ]; then
 	mv -v .gitconfig Local/etc/git/config
 else
@@ -106,6 +111,8 @@ popd
 
 # Change user home
 usermod -d /var/home/${username}/Local ${username}
+chown -R ${username} /var/home/${username}
+chgrp -R ${username} /var/home/${username}
 
 # Leave working directory
 popd

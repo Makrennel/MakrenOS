@@ -1,0 +1,55 @@
+#!/usr/bin/sh
+
+pushd /var/home/$USER
+
+[ ! -f "Desktop" ] && mkdir -v Desktop
+[ ! -f "Documents" ] && mkdir -v Documents
+[ ! -f "Downloads" ] && mkdir -v Downloads
+[ ! -f "Music" ] && mkdir -v Music
+[ ! -f "Templates" ] && mkdir -v Templates
+[ ! -f "Videos" ] && mkdir -v Videos
+
+if [ -f "Pictures" ]; then
+	mv -v Pictures Images
+elif [ ! -f "Images" ]; then
+	mkdir -v Images
+fi
+
+if [ -f "Public" ]; then
+	mv -v Public Shared
+elif [ ! -f "Shared" ]; then
+	mkdir -v Shared
+fi
+
+popd
+
+if [ "$HOME" == "/var/home/$USER" ]; then
+	echo "Cannot fully generate base because user's Home directory is not set to Local - use makrenos-migrate-home or makrenos-user-create to either migrate your current home directory, or create a new user with the correct configuration"
+	exit
+fi
+
+if [ "$HOME" == "/var/home/$USER/Local" ]; then
+	pushd /var/home/$USER/Local
+
+	[ ! -f "bin" ] && mkdir -v bin
+	[ ! -f "cache" ] && mkdir -v cache
+	[ ! -f "etc" ] && mkdir -v etc
+	[ ! -f "share" ] && mkdir -v share
+	[ ! -f "state" ] && mkdir -v state
+	
+	ln -s cache .cache
+	ln -s config .config
+	ln -s . .local
+
+	# Extras
+	[ ! -f "etc/git" ] && mkdir -v etc/git
+	touch etc/git/config
+
+	[ ! -f "share/themes" ] && mkdir -v share/themes
+	ln -s share/themes .themes
+	read -e -p 'Would you like to allow flatpak to see the share/themes directory? [yes/no] '  INPUT
+	[ "$INPUT" = "yes" ] && sudo flatpak -v override --filesystem=~/share/themes
+
+	popd
+fi
+

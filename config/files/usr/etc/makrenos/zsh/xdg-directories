@@ -1,18 +1,23 @@
+# FILESHOME - Because MakrenOS default home is /var/home/$USER/Local
+export FILES_HOME="$HOME/.."
+export FILESHOME="$HOME/.."
+export FH="$HOME/.."
+
 # Default Base Dirs
-export XDG_CACHE_HOME="$HOME/Local/cache"
-export XDG_CONFIG_HOME="$HOME/Local/etc"
-export XDG_DATA_HOME="$HOME/Local/share"
-export XDG_STATE_HOME="$HOME/Local/state"
+export XDG_CACHE_HOME="$HOME/cache"
+export XDG_CONFIG_HOME="$HOME/etc"
+export XDG_DATA_HOME="$HOME/share"
+export XDG_STATE_HOME="$HOME/state"
 
 # This is automatically set by logind
 #export XDG_RUNTIME_DIR=
 
 # Default User Dirs
-export XDG_DESKTOP_DIR="$HOME/Desktop"
-export XDG_DOCUMENTS_DIR="$HOME/Documents"
-export XDG_DOWNLOAD_DIR="$HOME/Downloads"
-export XDG_MUSIC_DIR="$HOME/Music"
-export XDG_PICTURES_DIR="$HOME/Images"
-export XDG_PUBLICSHARE_DIR="$HOME/Shared"
-export XDG_TEMPLATES_DIR="$HOME/Templates"
-export XDG_VIDEOS_DIR="$HOME/Videos"
+export XDG_DESKTOP_DIR="$FH/Desktop"
+export XDG_DOCUMENTS_DIR="$FH/Documents"
+export XDG_DOWNLOAD_DIR="$FH/Downloads"
+export XDG_MUSIC_DIR="$FH/Music"
+export XDG_PICTURES_DIR="$FH/Images"
+export XDG_PUBLICSHARE_DIR="$FH/Shared"
+export XDG_TEMPLATES_DIR="$FH/Templates"
+export XDG_VIDEOS_DIR="$FH/Videos"

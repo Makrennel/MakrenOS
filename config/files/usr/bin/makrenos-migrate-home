@@ -1,0 +1,108 @@
+#!/usr/bin/sh
+# TODO: Don't hardcode to /var/home - use a configurable path
+
+if [ "$#" -eq 0 ] || [ $1 == "--help" ] || [ $1 = "-h" ]; then
+	echo "MakrenOS script which automatically migrates a user home from the normal location in /var/home/USER to /var/home/USER/Local to remove mess from the primary user files home"
+	echo "USER MUST LOG OUT OF OTHER SESSIONS - RUN FROM ANOTHER USER"
+	echo "Syntax: makrenos-migrate-home USERNAME"
+	exit
+fi
+
+# Check if running as root
+if [ $EUID -ne 0 ]; then
+	echo "Please run as root."
+	exit
+fi
+
+username=$1
+
+# Working Directory
+pushd /var/home/${username}
+
+# XDG_DATA_HOME & XDG_STATE_HOME
+if [ -f .local ]; then
+	mv -v .local Local
+else
+	mkdir Local
+fi
+ln -s ./ Local/.local
+
+# XDG_CONFIG_HOME
+if [ -f .config ]; then
+	mv -v .config Local/etc
+else
+	mkdir Local/etc
+fi
+ln -s etc Local/.config
+
+# XDG_CACHE_HOME
+if [ -f .cache ]; then 
+	mv -v .cache Local/cache
+else
+	mkdir Local/cache
+fi
+ln -s cache Local/.cache
+
+# Flatpak - cannot move .var from $HOME but we can symlink so it's accessible unhidden
+if [ -f .var ]; then
+	mv -v .var Local/.var
+else
+	mkdir Local/.var
+fi
+ln -s .var Local/var
+
+# Themes
+if [ -f .themes ]; then
+	mv -v .themes Local/share/themes
+else
+	mkdir Local/share/themes
+fi
+ln -s share/themes Local/.themes
+flatpak override --filesystem=~/share/themes
+
+# Bin
+if [ -f .bin ]; then
+	mv -v .bin Local/bin
+else
+	mkdir Local/bin
+fi
+ln -s bin Local/.bin
+
+# Git Config
+mkdir Local/etc/git
+if [ -f .gitconfig ]; then
+	mv -v .gitconfig Local/etc/git/config
+else
+	touch Local/etc/git/config
+fi
+
+# Others
+if [ -f .justfile ]; then
+	mv -v .justfile Local/
+fi
+
+if [ -f .fonts.conf ]; then
+	mv -v .fonts.conf Local/
+fi
+
+if [ -f .gtkrc-2.0-kde4 ]; then
+	mv -v .gtkrc-2.0-kde4 Local/
+fi
+
+# Check if user would like other files moved
+read -e -p 'Would you like to automatically move all remaining files and directory starting with "." in the current home directory to the new home? [yes/no] ' INPUT
+if [ "$INPUT" = yes ]; then
+	mv -v .* Local/
+else
+	echo "You may have to manually move some files or directories from your home directory to the new home in Local, or you will have problems with some programs"
+fi
+
+# MakrenOS FILES_HOME
+ln -s .. Local/files
+
+# Change user home
+usermod -d /var/home/${username}/Local ${username}
+
+# Leave working directory
+popd
+

@@ -42,6 +42,13 @@ modules:
       - virt-install
       - virt-manager
       - virt-viewer
+
+      # Build Tools
+      - make
+      - automake
+      - gcc
+      - gcc-c++
+      - kernel-devel
     remove:
       - firefox # default firefox removed in favor of flatpak
       - firefox-langpacks # langpacks needs to also be removed to prevent dependency problems

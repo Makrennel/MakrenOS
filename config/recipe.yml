@@ -32,6 +32,7 @@ modules:
       - mpv
       - neovim
       - ranger
+      - waydroid
       - zsh
 
       # Virtualization

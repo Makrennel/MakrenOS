@@ -54,6 +54,7 @@ else
 	mkdir -p Local/share/themes
 fi
 flatpak -v override --filesystem=~/share/themes
+flatpak -v override --filesystem=~/.themes
 
 # Bin
 if [ -f .bin ]; then

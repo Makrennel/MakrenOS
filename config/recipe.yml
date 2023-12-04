@@ -31,6 +31,8 @@ modules:
       - kitty
       - mpv
       - neovim
+      - plymouth-kcm
+      - plymouth-theme-breeze
       - ranger
       - waydroid
       - zsh

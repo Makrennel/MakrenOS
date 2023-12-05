@@ -29,6 +29,7 @@ modules:
       - fastfetch
       - icewm
       - kitty
+      - lightly
       - mpv
       - neovim
       - ranger

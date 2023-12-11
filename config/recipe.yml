@@ -35,6 +35,28 @@ modules:
       - waydroid
       - zsh
 
+      # IME
+      - fcitx5
+      - fcitx5-configtool
+      - fcitx5-gtk
+      - fcitx5-qt
+      - fcitx5-qt6
+      - fcitx5-table-other
+      - kcm-fcitx5
+      # Chinese
+      - fcitx5-chewing
+      - fcitx5-chinese-addons
+      - fcitx5-rime
+      - fcitx5-table-extra
+      - fcitx5-zhuyin
+      # Japanese
+      - fcitx5-anthy
+      - fcitx5-kkc
+      - fcitx5-mozc
+      - fcitx5-skk
+      # Korean
+      - fcitx5-hangul
+
       # Virtualization
       - bridge-utils
       - libvirt
